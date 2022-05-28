@@ -3,12 +3,10 @@ kind: Service
 metadata:
   name: project-vxy-svc
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: project-vxy
   ports:
-    - name: http
-      nodePort: 30081 # available outside, from 30000 to 32767
+    - port: 8082
       protocol: TCP
-      port: 8081 # available to the cluster
-      targetPort: 3300 # target port
+      targetPort: 3300
