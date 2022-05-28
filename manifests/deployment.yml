@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-ex1-02
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-vxy
+  template:
+    metadata:
+      labels:
+        app: project-vxy
+    spec:
+      containers:
+        - name: project-vxy
+          image: jamesho287/kube-ex1-02:v0.1
