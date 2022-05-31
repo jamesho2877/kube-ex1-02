@@ -12,6 +12,14 @@ spec:
       labels:
         app: project-vxy
     spec:
+      volumes:
+        - name: shared-bucket
+          persistentVolumeClaim:
+            claimName: log-app-pv-claim
       containers:
         - name: project-vxy
-          image: jamesho287/kube-ex1-02:v0.1
+          image: jamesho287/kube-ex1-02:v0.2
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: shared-bucket
+            mountPath: /usr/src/app/media

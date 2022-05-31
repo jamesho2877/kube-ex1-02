@@ -1,0 +1,42 @@
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+  }
+  .banner img {
+    width: 300px;
+    height: auto;
+  }
+  .todo-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .todo-input button {
+    margin-left: 10px;
+  }
+</style>
+
+<div class="app">
+  <div class="banner">
+    <img src="/media/banner.jpg" alt="banner" />
+  </div>
+  <div class="todo-input">
+    <input type="text" maxlength="140" />
+    <button>Create TODO</button>
+  </div>
+  <div class="todo-list-wrapper">
+    <ul class="todo-list">
+      <li>TODO 1</li>
+      <li>TODO 2</li>
+    </ul>
+  </div>
+</div>
