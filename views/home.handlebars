@@ -23,6 +23,12 @@
   .todo-input button {
     margin-left: 10px;
   }
+  .todo-list-wrapper {
+    width: 300px;
+  }
+  .todo-list {
+    padding: 0 0 0 2.5rem;
+  }
 </style>
 
 <div class="app">
@@ -30,13 +36,68 @@
     <img src="/media/banner.jpg" alt="banner" />
   </div>
   <div class="todo-input">
-    <input type="text" maxlength="140" />
-    <button>Create TODO</button>
+    <form id="f1" action="http://localhost:{{serverPort}}/todos" method="POST">
+      <input name="todo" type="text" required="required" maxlength="140" />
+      <button type="submit">Create TODO</button>
+    </form>
   </div>
   <div class="todo-list-wrapper">
-    <ul class="todo-list">
-      <li>TODO 1</li>
-      <li>TODO 2</li>
-    </ul>
+    <ul class="todo-list"></ul>
   </div>
 </div>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const sel = document.querySelector.bind(document);
+    const todoSubmitBtnEl = sel(".todo-input button");
+    const todoInputEl = sel(".todo-input input");
+    const todoListEl = sel(".todo-list");
+    const formF1El = sel("#f1");
+
+    initTodos();
+    formF1El.addEventListener("submit", submitTodo);
+
+
+    async function initTodos() {
+      const res = await fetch("http://localhost:{{serverPort}}/todos");
+      if (res.status === 200) {
+        const content = await res.json();
+        const todos = content.todos;
+        todos.forEach(todo => addTodo(todo));
+      } else {
+        alert("Unable to get todo list");
+      }
+    }
+
+    async function submitTodo(e) {
+      e.preventDefault();
+
+      const newTodo = formF1El.todo.value.trim();
+      if (newTodo.length === 0) return;
+
+      const res = await fetch("http://localhost:{{serverPort}}/todos", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ todo: newTodo }),
+      });
+
+      if (res.status === 200) {
+        const content = await res.json();
+        const todo = content.todo;
+        addTodo(todo);
+      } else {
+        alert("Unable to add the given todo");
+      }
+    }
+
+    function addTodo(data) {
+      const liEl = document.createElement("li");
+      liEl.innerText = data;
+      todoListEl.appendChild(liEl);
+      return liEl;
+    }
+  });
+</script>

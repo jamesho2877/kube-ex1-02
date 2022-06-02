@@ -10,3 +10,4 @@ This project includes solutions for the following exercises:
 * Exercise 1.09: More services
 * Exercise 1.12: Project v0.6
 * Exercise 1.13: Project v0.7
+* Exercise 2.02: Project v1.0

@@ -8,24 +8,31 @@ spec:
   rules:
   - http:
       paths:
-      - path: /project-vxy
+      - path: /project-vxy-backend
         pathType: Prefix
         backend:
           service:
-            name: project-vxy-svc
+            name: project-vxy-backend-svc
             port:
-              number: 8082
+              number: 8002
+      - path: /project-vxy-frontend
+        pathType: Prefix
+        backend:
+          service:
+            name: project-vxy-frontend-svc
+            port:
+              number: 8003
       - path: /log-output
         pathType: Prefix
         backend:
           service:
             name: log-app-svc
             port:
-              number: 8083
+              number: 8004
       - path: /pingpong
         pathType: Prefix
         backend:
           service:
             name: ping-pong-svc
             port:
-              number: 8084
+              number: 8005

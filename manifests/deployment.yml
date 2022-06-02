@@ -17,9 +17,21 @@ spec:
           persistentVolumeClaim:
             claimName: log-app-pv-claim
       containers:
-        - name: project-vxy
-          image: jamesho287/kube-ex1-02:v0.2
+        - name: project-vxy-backend
+          image: jamesho287/kube-ex1-02:v0.3
           imagePullPolicy: IfNotPresent
+          env:
+          - name: BACKEND
+            value: "true"
+          volumeMounts:
+          - name: shared-bucket
+            mountPath: /usr/src/app/media
+        - name: project-vxy-frontend
+          image: jamesho287/kube-ex1-02:v0.3
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: BACKEND
+            value: "false"
           volumeMounts:
           - name: shared-bucket
             mountPath: /usr/src/app/media

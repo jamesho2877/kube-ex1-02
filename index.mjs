@@ -1,26 +1,78 @@
 import path from "path";
 import express from "express";
-import { writeFile, existsSync } from "node:fs";
+import { writeFile, existsSync, unlink } from "node:fs";
 import { engine } from "express-handlebars";
 import fetch from "node-fetch";
+import bodyParser from "body-parser";
+import expressSanitizer from "express-sanitizer";
+import cors from "cors";
 
-const PORT = process.env.PORT || 3300;
+
+let { PORT } = process.env;
+const {
+  BACKEND = "false",
+  PRODUCTION = "true",
+} = process.env;
+
 const app = express();
 const router = express.Router();
 
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.use("/media", express.static(path.resolve(process.cwd(), "media")));
+app.use(cors());
+app.use(expressSanitizer());
 
-router.get("/", async (req, res) => {
+if (BACKEND === "true") {
+  PORT = PORT || 3200;
+
+  // support both JSON & URL encoded bodies
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true })); 
+
+  const todoList = [];
+
+  router.get("/todos", async (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({
+      todos: todoList,
+    }));
+  });
+
+  router.post("/todos", async (req, res) => {
+    const todo = req.sanitize(req.body.todo);
+    if (!todo) {
+      res.status(400);
+      res.send('Invalid todo');
+      return;
+    }
+    
+    todoList.push(todo);
+    console.log("add todo", todo);
+
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ todo }));
+  });
+} else {
+  PORT = PORT || 3300;
+  const serverPort = PRODUCTION === "false" ? PORT : 8002;
   const bannerImagePath = path.resolve(process.cwd(), "media/banner.jpg");
-  const isBannerExisted = existsSync(bannerImagePath);
-  if (!isBannerExisted) {
-    await downloadImage("https://picsum.photos/1200", bannerImagePath);
-  }
+
+  // remove old image from shared storage - on start
+  unlink(bannerImagePath, () => {
+    console.log("Deleted old banner image from shared storage");
+  });
+
+  app.engine("handlebars", engine());
+  app.set("view engine", "handlebars");
+  app.use("/media", express.static(path.resolve(process.cwd(), "media")));
   
-  res.render("home");
-});
+  router.get("/", async (req, res) => {
+    const isBannerExisted = existsSync(bannerImagePath);
+    if (!isBannerExisted) {
+      await downloadImage("https://picsum.photos/1200", bannerImagePath);
+    }
+    
+    res.render("home", { serverPort });
+  });
+}
 
 app.use(router);
 
@@ -35,6 +87,6 @@ async function downloadImage(inputImageURL, outputImageURL) {
   const response = await fetch(inputImageURL);
   const arrBuffer = await response.arrayBuffer();
   writeFile(outputImageURL, Buffer.from(arrBuffer), () => {
-    console.log('Downloaded image successfully!');
+    console.log("Downloaded image successfully!");
   });
 }
