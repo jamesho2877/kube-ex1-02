@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kube-ex1-02
+  namespace: project-vxy
 spec:
   replicas: 1
   selector:
@@ -15,10 +16,10 @@ spec:
       volumes:
         - name: shared-bucket
           persistentVolumeClaim:
-            claimName: log-app-pv-claim
+            claimName: project-vxy-pv-claim
       containers:
-        - name: project-vxy-backend
-          image: jamesho287/kube-ex1-02:v0.3
+        - name: backend-container
+          image: jamesho287/kube-ex1-02:v0.4
           imagePullPolicy: IfNotPresent
           env:
           - name: BACKEND
@@ -26,8 +27,8 @@ spec:
           volumeMounts:
           - name: shared-bucket
             mountPath: /usr/src/app/media
-        - name: project-vxy-frontend
-          image: jamesho287/kube-ex1-02:v0.3
+        - name: frontend-container
+          image: jamesho287/kube-ex1-02:v0.4
           imagePullPolicy: IfNotPresent
           env:
           - name: BACKEND

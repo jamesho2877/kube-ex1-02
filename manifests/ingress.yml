@@ -1,38 +1,40 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: backend-middleware
+  namespace: project-vxy
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /api
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: setup-ingress
+  name: project-vxy-ingress
+  namespace: project-vxy
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    ingress.kubernetes.io/ssl-redirect: "false"
+    traefik.ingress.kubernetes.io/router.middlewares: project-vxy-backend-middleware@kubernetescrd
 spec:
   rules:
-  - http:
+  - host: localhost
+    http:
       paths:
-      - path: /project-vxy-backend
-        pathType: Prefix
-        backend:
-          service:
-            name: project-vxy-backend-svc
-            port:
-              number: 8002
-      - path: /project-vxy-frontend
-        pathType: Prefix
-        backend:
-          service:
-            name: project-vxy-frontend-svc
-            port:
-              number: 8003
-      - path: /log-output
-        pathType: Prefix
-        backend:
-          service:
-            name: log-app-svc
-            port:
-              number: 8004
-      - path: /pingpong
-        pathType: Prefix
-        backend:
-          service:
-            name: ping-pong-svc
-            port:
-              number: 8005
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 8080
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 8080

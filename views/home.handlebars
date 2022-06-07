@@ -59,7 +59,7 @@
 
 
     async function initTodos() {
-      const res = await fetch("http://localhost:{{serverPort}}/todos");
+      const res = await fetch("{{{serverPath}}}/todos");
       if (res.status === 200) {
         const content = await res.json();
         const todos = content.todos;
@@ -75,7 +75,7 @@
       const newTodo = formF1El.todo.value.trim();
       if (newTodo.length === 0) return;
 
-      const res = await fetch("http://localhost:{{serverPort}}/todos", {
+      const res = await fetch("{{{serverPath}}}/todos", {
         method: "POST",
         headers: {
           "Accept": "application/json",

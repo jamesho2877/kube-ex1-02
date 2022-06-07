@@ -21,7 +21,7 @@ app.use(cors());
 app.use(expressSanitizer());
 
 if (BACKEND === "true") {
-  PORT = PORT || 3200;
+  PORT = PORT || 3300;
 
   // support both JSON & URL encoded bodies
   app.use(bodyParser.json());
@@ -51,8 +51,8 @@ if (BACKEND === "true") {
     res.end(JSON.stringify({ todo }));
   });
 } else {
-  PORT = PORT || 3300;
-  const serverPort = PRODUCTION === "false" ? PORT : 8002;
+  PORT = PORT || 3200;
+  const serverPath = PRODUCTION === "false" ? `http://localhost:3300` : `/api`;
   const bannerImagePath = path.resolve(process.cwd(), "media/banner.jpg");
 
   // remove old image from shared storage - on start
@@ -70,7 +70,7 @@ if (BACKEND === "true") {
       await downloadImage("https://picsum.photos/1200", bannerImagePath);
     }
     
-    res.render("home", { serverPort });
+    res.render("home", { serverPath });
   });
 }
 
