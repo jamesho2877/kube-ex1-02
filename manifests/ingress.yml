@@ -18,6 +18,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.entrypoints: web
     ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/cache-enable: "false"
     traefik.ingress.kubernetes.io/router.middlewares: project-vxy-backend-middleware@kubernetescrd
 spec:
   rules:

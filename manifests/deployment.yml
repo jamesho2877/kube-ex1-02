@@ -19,16 +19,23 @@ spec:
             claimName: project-vxy-pv-claim
       containers:
         - name: backend-container
-          image: jamesho287/kube-ex1-02:v0.4
+          image: jamesho287/kube-ex1-02:v0.5
           imagePullPolicy: IfNotPresent
           env:
           - name: BACKEND
             value: "true"
+          - name: NS
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          envFrom:
+          - secretRef:
+              name: postgres-secret
           volumeMounts:
           - name: shared-bucket
             mountPath: /usr/src/app/media
         - name: frontend-container
-          image: jamesho287/kube-ex1-02:v0.4
+          image: jamesho287/kube-ex1-02:v0.5
           imagePullPolicy: IfNotPresent
           env:
           - name: BACKEND

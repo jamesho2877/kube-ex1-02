@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-svc
+  namespace: project-vxy
+  labels:
+    app: postgres-db
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres-db
+  ports:
+    - name: postgres-db
+      port: 5432
+      protocol: TCP
+      targetPort: 5432

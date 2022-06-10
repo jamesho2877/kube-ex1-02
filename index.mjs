@@ -27,29 +27,36 @@ if (BACKEND === "true") {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true })); 
 
-  const todoList = [];
+  main();
 
-  router.get("/todos", async (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({
-      todos: todoList,
-    }));
-  });
+  async function main() {
+    const { default: Database } = await import("./src/database.mjs");
+    const database = new Database();
 
-  router.post("/todos", async (req, res) => {
-    const todo = req.sanitize(req.body.todo);
-    if (!todo) {
-      res.status(400);
-      res.send('Invalid todo');
-      return;
-    }
-    
-    todoList.push(todo);
-    console.log("add todo", todo);
+    router.get("/todos", async (req, res) => {
+      res.setHeader("Content-Type", "application/json");
 
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ todo }));
-  });
+      const todoList = await database.readTodos();
+
+      res.end(JSON.stringify({
+        todos: todoList,
+      }));
+    });
+
+    router.post("/todos", async (req, res) => {
+      const newTodo = req.sanitize(req.body.todo);
+      if (!newTodo) {
+        res.status(400);
+        res.send('Invalid todo');
+        return;
+      }
+      
+      const todo = await database.writeTodo(newTodo);
+
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ todo }));
+    });
+  }
 } else {
   PORT = PORT || 3200;
   const serverPath = PRODUCTION === "false" ? `http://localhost:3300` : `/api`;

@@ -1,3 +1,6 @@
 node_modules
-package-lock.json
 media/*
+package-lock.json
+
+**/key.txt
+**/secret.yml

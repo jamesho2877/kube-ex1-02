@@ -1,5 +1,9 @@
-node_modules
-package-lock.json
-.gitignore
 manifests
+node_modules
+.gitignore
 Dockerfile
+package-lock.json
+README.md
+
+**/key.txt
+**/secret.yml
