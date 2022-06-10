@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daily-todo-cronjob
+  namespace: project-vxy
+spec:
+  schedule: "0 9 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: daily-todo-cronjob
+            image: postgres:alpine3.16
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: SQL_COMMAND
+              value: "INSERT INTO todos (content) VALUES (now() || '<br/>Read: ' || '<a target=\"\"_blank\"\" href=\"\"https://en.wikipedia.org/wiki/Special:Random\"\">Wiki Random</a>');"
+            envFrom:
+            - secretRef:
+                name: postgres-secret
+            command: ["bin/sh", "-c", "psql -Atx postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres-svc.project-vxy.svc.cluster.local:5432/$POSTGRES_DB -c \"$(SQL_COMMAND)\""]
+          restartPolicy: OnFailure

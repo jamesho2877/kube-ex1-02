@@ -13,3 +13,4 @@ This project includes solutions for the following exercises:
 * Exercise 2.02: Project v1.0
 * Exercise 2.04: Project v1.1
 * Exercise 2.08: Project v1.2
+* Exercise 2.09: Daily todos

@@ -95,7 +95,7 @@
 
     function addTodo(data) {
       const liEl = document.createElement("li");
-      liEl.innerText = data;
+      liEl.innerHTML = data;
       todoListEl.appendChild(liEl);
       return liEl;
     }
