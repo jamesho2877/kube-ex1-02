@@ -19,7 +19,7 @@ spec:
             claimName: project-vxy-pv-claim
       containers:
         - name: backend-container
-          image: jamesho287/kube-ex1-02:v0.5
+          image: jamesho287/kube-ex1-02:v0.6
           imagePullPolicy: IfNotPresent
           env:
           - name: BACKEND
@@ -35,7 +35,7 @@ spec:
           - name: shared-bucket
             mountPath: /usr/src/app/media
         - name: frontend-container
-          image: jamesho287/kube-ex1-02:v0.5
+          image: jamesho287/kube-ex1-02:v0.6
           imagePullPolicy: IfNotPresent
           env:
           - name: BACKEND

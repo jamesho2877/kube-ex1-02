@@ -45,12 +45,23 @@ if (BACKEND === "true") {
 
     router.post("/todos", async (req, res) => {
       const newTodo = req.sanitize(req.body.todo);
+
       if (!newTodo) {
-        res.status(400);
-        res.send('Invalid todo');
-        return;
+        return respInvalidTodo(
+          res,
+          "Invalid todo - Empty todo",
+          JSON.stringify({ todo: newTodo })
+        );
       }
       
+      if (newTodo.length > 140) {
+        return respInvalidTodo(
+          res,
+          "Invalid todo - Exceeded 140 characters",
+          JSON.stringify({ todo: newTodo })
+        );
+      }
+
       const todo = await database.writeTodo(newTodo);
 
       res.setHeader("Content-Type", "application/json");
@@ -96,4 +107,10 @@ async function downloadImage(inputImageURL, outputImageURL) {
   writeFile(outputImageURL, Buffer.from(arrBuffer), () => {
     console.log("Downloaded image successfully!");
   });
+}
+
+function respInvalidTodo(res, errMessage, errInfo) {
+  console.log(`Error: ${errMessage}`, errInfo);
+  res.status(400);
+  res.send(errMessage);
 }
