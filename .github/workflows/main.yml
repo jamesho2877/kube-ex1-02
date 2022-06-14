@@ -1,9 +1,9 @@
-name: Project-vxy Production Release
+name: Production release
 
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
