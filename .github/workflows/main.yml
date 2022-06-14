@@ -21,9 +21,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # Test env
+      - name: Test secret env variable
+        env:
+          TEST_WORD_VAR: ${{ secrets.TEST_WORD }}
+        run: |
+          echo ${#TEST_WORD_VAR}
+
       # Help deploying to Google Cloud
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@main
+        uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: ${{ secrets.GKE_PROJECT }}
           service_account_key: ${{ secrets.GKE_SA_KEY }}
