@@ -15,13 +15,14 @@ jobs:
   go-production:
     name: Build, publish and deploy
     runs-on: ubuntu-latest
+    environment: kube-course
 
     steps:
       # Set environment for jobs and triggers
       - name: Checkout
         uses: actions/checkout@v3
 
-      # Test env
+      # Test secret env variable
       - name: Test secret env variable
         env:
           TEST_WORD_VAR: ${{ secrets.TEST_WORD }}
