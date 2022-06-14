@@ -4,3 +4,4 @@ package-lock.json
 
 **/key.txt
 **/secret.yml
+GKE_SA_KEY.json

@@ -7,6 +7,6 @@ spec:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 200Mi
+    storage: 50Mi
   hostPath:
     path: /data/kube

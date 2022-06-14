@@ -33,7 +33,11 @@ if (BACKEND === "true") {
     const { default: Database } = await import("./src/database.mjs");
     const database = new Database();
 
-    router.get("/todos", async (req, res) => {
+    router.get("/", async (req, res) => {
+      res.send("Hi");
+    });
+
+    router.get("/api/todos", async (req, res) => {
       res.setHeader("Content-Type", "application/json");
 
       const todoList = await database.readTodos();
@@ -43,7 +47,7 @@ if (BACKEND === "true") {
       }));
     });
 
-    router.post("/todos", async (req, res) => {
+    router.post("/api/todos", async (req, res) => {
       const newTodo = req.sanitize(req.body.todo);
 
       if (!newTodo) {

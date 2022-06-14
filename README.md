@@ -15,3 +15,4 @@ This project includes solutions for the following exercises:
 * Exercise 2.08: Project v1.2
 * Exercise 2.09: Daily todos
 * Exercise 2.10: Project v1.3
+* Exercise 3.03: Project v1.4
