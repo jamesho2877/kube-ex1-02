@@ -16,13 +16,34 @@ This project includes solutions for the following exercises:
 * Exercise 2.09: Daily todos
 * Exercise 2.10: Project v1.3
 * Exercise 3.03: Project v1.4
+* Exercise 3.04: Project v1.4.1 (skipped *)
+* Exercise 3.05: Project v1.4.2 (skipped *)
+* Exercise 3.06: DBaaS vs DIY **
 
 
-These exercises below related to separation of deployment using branch name as namespace were skipped since I already used namespace from previous excercises for project separation instead. There is a [limitation in changing namespace globally for hard-coded namespace with kustomize](https://github.com/kubernetes-sigs/kustomize/issues/880).
+
+## * Skipped exersices
+These exercises related to separation of deployment using branch name as namespace below were skipped because I already used namespace from previous excercises for project separation instead (hard-coded namespace in most of yml files). There is a [limitation in changing namespace globally for hard-coded namespace with kustomize](https://github.com/kubernetes-sigs/kustomize/issues/880).
 
 * Exercise 3.04: Project v1.4.1
-* Exercise 3.04: Project v1.4.2
+* Exercise 3.05: Project v1.4.2
 
+---
+
+## * Q/A exersices
+
+### Exercise 3.06: DBaaS vs DIY
+|Pros/Cons|DBaaS|DIY|
+|-|:-:|:-:|
+|Low cost & fast to spin up and run for small projects||x|
+|Low cost & fast to spin up and run for big projects|x||
+|Self-managed resources, hence, easier to manage node's resources|x||
+|Easier to update configuration, perform backup & maintainance work, and enable high availability|x||
+|Less work to hook 3rd party extensions & more features to select|x||
+|Less work & cost overall if <ins>expansion</ins> is a must later on|x||
+|Has service support|x||
+
+---
 
 GKE setup requires the following variables:
 
