@@ -18,6 +18,12 @@ This project includes solutions for the following exercises:
 * Exercise 3.03: Project v1.4
 
 
+These exercises below related to separation of deployment using branch name as namespace were skipped since I already used namespace from previous excercises for project separation instead. There is a [limitation in changing namespace globally for hard-coded namespace with kustomize](https://github.com/kubernetes-sigs/kustomize/issues/880).
+
+* Exercise 3.04: Project v1.4.1
+* Exercise 3.04: Project v1.4.2
+
+
 GKE setup requires the following variables:
 
 ```yaml
