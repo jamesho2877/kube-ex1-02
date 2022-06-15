@@ -15,11 +15,10 @@ spec:
     spec:
       volumes:
         - name: shared-bucket
-          persistentVolumeClaim:
-            claimName: project-vxy-pv-claim
+          emptyDir: {}
       containers:
         - name: backend-container
-          image: PROJECT/IMAGE
+          image: project-vxy-image
           imagePullPolicy: Always
           env:
           - name: BACKEND
@@ -35,7 +34,7 @@ spec:
           - name: shared-bucket
             mountPath: /usr/src/app/media
         - name: frontend-container
-          image: PROJECT/IMAGE
+          image: project-vxy-image
           imagePullPolicy: Always
           env:
           - name: BACKEND

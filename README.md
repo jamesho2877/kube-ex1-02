@@ -16,3 +16,13 @@ This project includes solutions for the following exercises:
 * Exercise 2.09: Daily todos
 * Exercise 2.10: Project v1.3
 * Exercise 3.03: Project v1.4
+
+
+GKE setup requires the following variables:
+
+```yaml
+GKE_PROJECT_ID: "Under <given-sa-name>-<6-random-digits> format"
+GKE_SA: "Under <sa-name>@<project-id>.iam.gserviceaccount.com format"
+GKE_SA_CREDENTIALS: "Under JSON format"
+SOPS_AGE_KEY: "Under PGP format"
+```

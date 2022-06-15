@@ -1,9 +1,6 @@
 resources:
 - manifests/namespace.yml
 
-- manifests/persistent_volume.yml
-- manifests/persistent_volume_claim.yml
-
 - manifests/database/config_map_db.yml
 - manifests/database/secret.yml
 - manifests/database/statefulset.yml
@@ -15,5 +12,6 @@ resources:
 - manifests/ingress.yml
 
 images:
-  - name: PROJECT/IMAGE
-    newName: jamesho287/kube-ex1-02:v0.7
+  - name: project-vxy-image
+    newName: some-new-name
+    newTag: some-new-tag
