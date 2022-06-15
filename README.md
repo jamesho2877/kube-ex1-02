@@ -16,13 +16,14 @@ This project includes solutions for the following exercises:
 * Exercise 2.09: Daily todos
 * Exercise 2.10: Project v1.3
 * Exercise 3.03: Project v1.4
-* Exercise 3.04: Project v1.4.1 (skipped *)
-* Exercise 3.05: Project v1.4.2 (skipped *)
-* Exercise 3.06: DBaaS vs DIY **
+* (Skipped) Exercise 3.04: Project v1.4.1
+* (Skipped) Exercise 3.05: Project v1.4.2
+* (Q/A) Exercise 3.06: DBaaS vs DIY
+* (Q/A) Exercise 3.07: Commitment
 
 
 
-## * Skipped exersices
+## Skipped exersices
 These exercises related to separation of deployment using branch name as namespace below were skipped because I already used namespace from previous excercises for project separation instead (hard-coded namespace in most of yml files). There is a [limitation in changing namespace globally for hard-coded namespace with kustomize](https://github.com/kubernetes-sigs/kustomize/issues/880).
 
 * Exercise 3.04: Project v1.4.1
@@ -30,7 +31,9 @@ These exercises related to separation of deployment using branch name as namespa
 
 ---
 
-## * Q/A exersices
+## Q/A exersices
+
+In this section, please forgive my knowledge limitation if you found unreasonable somewhere.
 
 ### Exercise 3.06: DBaaS vs DIY
 |Pros/Cons|DBaaS|DIY|
@@ -42,6 +45,9 @@ These exercises related to separation of deployment using branch name as namespa
 |Less work to hook 3rd party extensions & more features to select|x||
 |Less work & cost overall if <ins>expansion</ins> is a must later on|x||
 |Has service support|x||
+
+### Exercise 3.07: Commitment
+In reality, I would choose `DBaaS` if I work on company's projects following the above listed benefits. Most importantly, it brings the _peace of mind_ to me as a developer and a lot more benefits would reveil themselves as time flies. For experiment and the scope of this course, I would stay with the current setup using Postgres and `statefulset` with `volumeClaimTemplates`.
 
 ---
 
