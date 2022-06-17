@@ -51,6 +51,9 @@ In this section, please forgive my knowledge limitation if you found unreasonabl
 ### Exercise 3.07: Commitment
 In reality, I would choose `DBaaS` if I work on company's projects following the above listed benefits. Most importantly, it brings the _peace of mind_ to me as a developer and a lot more benefits would reveil themselves as time flies. For experiment and the scope of this course, I would stay with the current setup using Postgres and `statefulset` with `volumeClaimTemplates`.
 
+### Exercise 3.10: Project v1.6
+!['Log image'](image/log_image.png)
+
 ---
 
 GKE setup requires the following variables:
