@@ -66,6 +66,7 @@ if (BACKEND === "true") {
         );
       }
 
+      console.log("newTodo:", newTodo);
       const todo = await database.writeTodo(newTodo);
 
       res.setHeader("Content-Type", "application/json");
