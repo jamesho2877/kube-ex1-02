@@ -22,6 +22,7 @@ This project includes solutions for the following exercises:
 * (Q/A) Exercise 3.07: Commitment
 * Exercise 3.08: Project v1.5
 * Exercise 3.10: Project v1.6
+* Exercise 4.02: Project v1.7
 
 
 

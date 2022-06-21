@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: project-vxy-hpa
@@ -16,7 +16,7 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 12
+        averageUtilization: 50
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 30

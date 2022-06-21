@@ -9,9 +9,9 @@ resources:
 - manifests/deployment.yml
 - manifests/service.yml
 
-- manifests/ingress.yml
-
 - manifests/horizontal_pod_autoscaler.yml
+
+- manifests/ingress.yml
 
 images:
   - name: project-vxy-image

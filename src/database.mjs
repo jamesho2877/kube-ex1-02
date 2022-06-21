@@ -9,19 +9,37 @@ const {
 
 export default class Database {
   #pool;
+  #config;
 
   constructor() {
-    this.#pool = new pg.Pool({
+    this.#config = {
       host: `postgres-svc.${NS}.svc.cluster.local`,
       port: 5432,
       database: POSTGRES_DB,
       user: POSTGRES_USER,
       password: POSTGRES_PASSWORD,
       max: 10,
-    });
+    };
+
+    this.#pool = new pg.Pool(this.#config);
 
     this.#pool.on("error", async (err) => {
       console.error("Unexpected error on idle client", err);
+    });
+  }
+
+  testConnection() {
+    const client = new pg.Client(this.#config);
+    return new Promise(resolve => {
+      client.connect(err => {
+        if (err) {
+          console.log("testConnection - error", err);
+          resolve({ err });
+        } else {
+          client.end();
+          resolve({});
+        }
+      });
     });
   }
 

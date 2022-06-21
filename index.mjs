@@ -33,8 +33,10 @@ if (BACKEND === "true") {
     const { default: Database } = await import("./src/database.mjs");
     const database = new Database();
 
-    router.get("/", async (req, res) => {
-      res.send("Hi");
+    router.get("/healthz", async (req, res) => {
+      const { err } = await database.testConnection();
+      console.log("healthz - err", err);
+      res.sendStatus(err ? 500 : 200);
     });
 
     router.get("/api/todos", async (req, res) => {
