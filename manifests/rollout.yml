@@ -1,13 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: kube-ex1-02
   namespace: project-vxy
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: project-vxy
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - analysis:
+          templates:
+          - templateName: cpu-usage
   template:
     metadata:
       labels:
@@ -18,7 +25,7 @@ spec:
           emptyDir: {}
       containers:
         - name: backend-container
-          image: jamesho287/kube-ex1-02:v0.8
+          image: project-vxy-image
           imagePullPolicy: Always
           ports:
           - name: healthz-port
@@ -59,7 +66,7 @@ spec:
               cpu: "200m"
               memory: "100Mi"
         - name: frontend-container
-          image: jamesho287/kube-ex1-02:v0.8
+          image: project-vxy-image
           imagePullPolicy: Always
           env:
           - name: BACKEND

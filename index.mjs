@@ -39,7 +39,7 @@ if (BACKEND === "true") {
       res.sendStatus(err ? 500 : 200);
     });
 
-    router.get("/api/todos", async (req, res) => {
+    router.get("/todos", async (req, res) => {
       res.setHeader("Content-Type", "application/json");
 
       const todoList = await database.readTodos();
@@ -49,7 +49,7 @@ if (BACKEND === "true") {
       }));
     });
 
-    router.post("/api/todos", async (req, res) => {
+    router.post("/todos", async (req, res) => {
       const newTodo = req.sanitize(req.body.todo);
 
       if (!newTodo) {
@@ -78,6 +78,7 @@ if (BACKEND === "true") {
 } else {
   PORT = PORT || 3200;
   const serverPath = PRODUCTION === "false" ? `http://localhost:3300` : `/api`;
+  const bannerImageDirPath = path.resolve(process.cwd(), "media");
   const bannerImagePath = path.resolve(process.cwd(), "media/banner.jpg");
 
   // remove old image from shared storage - on start
@@ -87,7 +88,7 @@ if (BACKEND === "true") {
 
   app.engine("handlebars", engine());
   app.set("view engine", "handlebars");
-  app.use("/media", express.static(path.resolve(process.cwd(), "media")));
+  app.use("/media", express.static(bannerImageDirPath));
   
   router.get("/", async (req, res) => {
     const isBannerExisted = existsSync(bannerImagePath);

@@ -9,11 +9,11 @@ resources:
 - manifests/deployment.yml
 - manifests/service.yml
 
-- manifests/horizontal_pod_autoscaler.yml
+# - manifests/horizontal_pod_autoscaler.yml
 
 - manifests/ingress.yml
 
 images:
   - name: project-vxy-image
-    newName: some-new-name
-    newTag: some-new-tag
+    newName: jamesho287/kube-ex1-02
+    newTag: v0.8

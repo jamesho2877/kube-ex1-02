@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: cpu-usage
+  namespace: project-vxy
+spec:
+  metrics:
+  - name: cpu-usage
+    initialDelay: 10m
+    failureCondition: result > 8
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-1655-prometheus.prometheus.svc.cluster.local:9090 # Prometheus DNS
+        query: |
+          scalar (
+            sum(rate(container_cpu_usage_seconds_total{namespace="project-vxy", cpu="total"}[1m])) * 100
+          )
