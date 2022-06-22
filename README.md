@@ -23,6 +23,7 @@ This project includes solutions for the following exercises:
 * Exercise 3.08: Project v1.5
 * Exercise 3.10: Project v1.6
 * Exercise 4.02: Project v1.7
+* Exercise 4.03: Prometheus
 
 
 
@@ -54,6 +55,9 @@ In reality, I would choose `DBaaS` if I work on company's projects following the
 
 ### Exercise 3.10: Project v1.6
 !['Log image'](image/log_image.png)
+
+### Exercise 4.03: Prometheus
+!['Prometheus StatefulSets Query'](image/prometheus_statefulSets_count.png)
 
 ---
 
