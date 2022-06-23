@@ -25,6 +25,7 @@ This project includes solutions for the following exercises:
 * Exercise 4.02: Project v1.7
 * Exercise 4.03: Prometheus
 * Exercise 4.04: Project v1.8
+* Exercise 4.05: Project v1.9
 
 
 

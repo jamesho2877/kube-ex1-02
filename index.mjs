@@ -49,7 +49,26 @@ if (BACKEND === "true") {
       }));
     });
 
-    router.post("/todos", async (req, res) => {
+    router.put("/todo", async (req, res) => {
+      const todoID = req.sanitize(req.body.todoID);
+      const todoStatus = req.sanitize(req.body.todoStatus);
+
+      if (!todoID || !todoStatus) {
+        return respInvalidTodo(
+          res,
+          "Invalid todo",
+          JSON.stringify({ todoID: todoID })
+        );
+      }
+
+      console.log("todoID:", todoID, todoStatus);
+      const todo = await database.updateTodoStatus(todoID, todoStatus);
+
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ todo }));
+    });
+
+    router.post("/todo", async (req, res) => {
       const newTodo = req.sanitize(req.body.todo);
 
       if (!newTodo) {

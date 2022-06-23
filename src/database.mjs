@@ -61,9 +61,18 @@ export default class Database {
   async writeTodo(todo) {
     if (!todo) return;
     const rs = await this.#pool.query({
-      text: "INSERT INTO todos (content) VALUES ($1) RETURNING *",
+      text: "INSERT INTO todos (content,is_done) VALUES ($1,false) RETURNING *",
       values: [todo],
     });
-    return rs.rows[0]?.content || "";
+    return rs.rows[0];
+  }
+
+  async updateTodoStatus(todoID, todoStatus) {
+    if (!todoID || !todoStatus) return;
+    const rs = await this.#pool.query({
+      text: "UPDATE todos SET is_done=$1 WHERE id=$2 RETURNING *",
+      values: [todoStatus === "DONE", todoID],
+    });
+    return rs.rows[0];
   }
 }

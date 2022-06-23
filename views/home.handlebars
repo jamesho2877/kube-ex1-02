@@ -29,6 +29,15 @@
   .todo-list {
     padding: 0 0 0 2.5rem;
   }
+
+  .todo-item {
+    width: fit-content;
+    cursor: default;
+  }
+  .todo-item.done {
+    text-decoration: line-through;
+    color: #ccc;
+  }
 </style>
 
 <div class="app">
@@ -56,13 +65,13 @@
 
     initTodos();
     formF1El.addEventListener("submit", submitTodo);
+    todoListEl.addEventListener("click", handleUpdateTodoStatus);
 
 
     async function initTodos() {
       const res = await fetch("{{{serverPath}}}/todos");
       if (res.status === 200) {
-        const content = await res.json();
-        const todos = content.todos;
+        const { todos } = await res.json();
         todos.forEach(todo => addTodo(todo));
       } else {
         alert("Unable to get todo list");
@@ -75,7 +84,7 @@
       const newTodo = formF1El.todo.value.trim();
       if (newTodo.length === 0) return;
 
-      const res = await fetch("{{{serverPath}}}/todos", {
+      const res = await fetch("{{{serverPath}}}/todo", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -85,19 +94,58 @@
       });
 
       if (res.status === 200) {
-        const content = await res.json();
-        const todo = content.todo;
+        const { todo } = await res.json();
         addTodo(todo);
       } else {
         alert("Unable to add the given todo");
       }
     }
 
-    function addTodo(data) {
+    function addTodo(todo) {
       const liEl = document.createElement("li");
-      liEl.innerHTML = data;
+      liEl.className = "todo-item";
+      liEl.dataset.id = todo.id;
+      liEl.innerHTML = todo.content;
       todoListEl.appendChild(liEl);
       return liEl;
+    }
+
+    async function handleUpdateTodoStatus(e) {
+      const todoItemEl = e.target;
+
+      if (!todoItemEl.classList.contains("todo-item")) return;
+
+      const todo = await updateTodoStatus(
+        todoItemEl.dataset.id,
+        todoItemEl.classList.contains("done") ? "NOT DONE" : "DONE",
+      );
+
+      if (todo) {
+        if (todo.is_done) {
+          todoItemEl.classList.add("done");
+        } else {
+          todoItemEl.classList.remove("done");
+        }
+      }
+    }
+
+    async function updateTodoStatus(todoID, todoStatus) {
+      const res = await fetch("{{{serverPath}}}/todo", {
+        method: "PUT",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ todoID, todoStatus }),
+      });
+
+      if (res.status === 200) {
+        const { todo } = await res.json();
+        return todo;
+      } else {
+        alert("Unable to update the given todo");
+        return undefined;
+      }
     }
   });
 </script>
