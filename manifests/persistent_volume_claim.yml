@@ -2,10 +2,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: project-vxy-pv-claim
-  namespace: project-vxy
+  # namespace: project-vxy
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Mi
+      storage: 100Mi

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres-ss
-  namespace: project-vxy
+  # namespace: project-vxy
 spec:
   replicas: 1
   serviceName: postgres-svc
@@ -40,6 +40,7 @@ spec:
         name: data
       spec:
         accessModes: ["ReadWriteOnce"]
+        storageClassName: local-path
         resources:
           requests:
             storage: 100Mi

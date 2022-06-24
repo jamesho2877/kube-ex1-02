@@ -1,5 +1,6 @@
 resources:
-- manifests/namespace.yml
+# - manifests/namespace.yml
+- manifests/database/storageclass_local_path.yml
 
 - manifests/database/config_map_db.yml
 - manifests/database/secret.yml
@@ -16,4 +17,4 @@ resources:
 images:
   - name: project-vxy-image
     newName: jamesho287/kube-ex1-02
-    newTag: v0.9
+    newTag: v1.0

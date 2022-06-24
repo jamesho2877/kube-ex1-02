@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: project-vxy-hpa
-  namespace: project-vxy
+  # namespace: project-vxy
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

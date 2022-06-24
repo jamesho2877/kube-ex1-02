@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kube-ex1-02
-  namespace: project-vxy
+  # namespace: project-vxy
 spec:
   replicas: 1
   selector:
@@ -24,24 +24,26 @@ spec:
           - name: healthz-port
             containerPort: 3300
           readinessProbe:
-            initialDelaySeconds: 20
-            periodSeconds: 5
-            successThreshold: 2
-            failureThreshold: 5
+            # initialDelaySeconds: 20
+            # periodSeconds: 5
+            # successThreshold: 1
+            # failureThreshold: 5
             httpGet:
               scheme: HTTP
               path: /healthz
               port: healthz-port
-          livenessProbe:
-            initialDelaySeconds: 20
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            httpGet:
-              scheme: HTTP
-              path: /healthz
-              port: healthz-port
+          # livenessProbe:
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          #   httpGet:
+          #     scheme: HTTP
+          #     path: /healthz
+          #     port: healthz-port
           env:
+          - name: NATS_URL
+            value: nats://my-nats:4222
           - name: BACKEND
             value: "true"
           - name: NS
@@ -69,5 +71,36 @@ spec:
             mountPath: /usr/src/app/media
           resources:
             limits:
-              cpu: "200m"
-              memory: "100Mi"
+              cpu: "300m"
+              memory: "200Mi"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-ex1-02-broadcaster
+  # namespace: project-vxy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster-container
+          image: project-vxy-image
+          imagePullPolicy: Always
+          env:
+          - name: BROADCASTER
+            value: "true"
+          - name: NATS_URL
+            value: nats://my-nats:4222
+          - name: EXTERNAL_SERVICE_URL
+            value: http://localhost:8085
+          resources:
+            limits:
+              cpu: "50m"
+              memory: "50Mi"
