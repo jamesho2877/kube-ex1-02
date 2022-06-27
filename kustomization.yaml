@@ -5,7 +5,7 @@ resources:
 - manifests/database/storageclass_local_path.yml
 
 - manifests/database/config_map_db.yml
-- manifests/database/secret.yml
+# - manifests/database/secret.yml
 - manifests/database/statefulset.yml
 - manifests/database/service.yml
 
