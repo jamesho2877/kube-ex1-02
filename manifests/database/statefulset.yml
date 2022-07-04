@@ -11,6 +11,8 @@ spec:
       app: postgres-db # has to match .spec.template.metadata.labels
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: postgres-db # has to match .spec.selector.matchLabels
     spec:

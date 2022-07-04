@@ -8,6 +8,9 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          annotations:
+            linkerd.io/inject: enabled
         spec:
           containers:
           - name: daily-todo-cronjob
